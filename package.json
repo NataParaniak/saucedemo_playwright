@@ -1,5 +1,5 @@
 {
-  "name": "sausdemo_playwright",
+  "name": "saucedemo_playwright",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,12 +9,11 @@
     "test:debug": "playwright test --debug",
     "report playwright": "playwright show-report",
     "test:chromium": "playwright test --project=chromium",
-    "lint": "eslint .",
     "prepare": "husky",
-    
-  "report": "allure generate allure-results --clean && allure open allure-results",
-  "report:serve": "allure serve allure-results"
-
+    "lint": "eslint tests",
+    "format": "prettier --write .",
+    "report": "allure generate allure-results --clean && allure open allure-results",
+    "report:serve": "allure serve allure-results"
   },
   "keywords": [],
   "author": "",
