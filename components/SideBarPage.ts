@@ -2,13 +2,11 @@ import { BasePage } from '../pages/BasePage';
 import { type Locator, type Page } from '@playwright/test';
 
 export class SideBarPage extends BasePage {
-  readonly burgerMenu: Locator;
-  readonly logOutBtn: Locator;
+  readonly burgerMenu: Locator = this.page.locator('#react-burger-menu-btn');
+  readonly logOutBtn: Locator = this.page.locator('#logout_sidebar_link');
 
   constructor(page: Page) {
     super(page);
-    this.burgerMenu = page.locator('#react-burger-menu-btn');
-    this.logOutBtn = page.locator('#logout_sidebar_link');
   }
 
   async logOut(): Promise<void> {

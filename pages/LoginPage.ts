@@ -3,23 +3,16 @@ import { BasePage } from '../pages/BasePage';
 
 export class LoginPage extends BasePage {
   readonly path = '/';
-  readonly usernameInput: Locator;
-  readonly passwordInput: Locator;
-  readonly loginBtn: Locator;
-  readonly logo: Locator;
-  readonly textHeader: Locator;
-  readonly loginCredentials: Locator;
-  readonly passwordCredentials: Locator;
+  readonly usernameInput: Locator = this.page.locator('#user-name');
+  readonly passwordInput: Locator = this.page.locator('#password');
+  readonly loginBtn: Locator = this.page.locator('#login-button');
+  readonly logo: Locator = this.page.locator('.login_logo');
+  readonly textHeader: Locator = this.page.getByText('Accepted usernames are:');
+  readonly loginCredentials: Locator = this.page.locator('.login_credentials');
+  readonly passwordCredentials: Locator = this.page.locator('.login_password');
 
   constructor(page: Page) {
     super(page);
-    this.usernameInput = page.locator('#user-name');
-    this.passwordInput = page.locator('#password');
-    this.loginBtn = page.locator('#login-button');
-    this.logo = page.locator('.login_logo');
-    this.textHeader = page.getByText('Accepted usernames are:');
-    this.loginCredentials = page.locator('.login_credentials');
-    this.passwordCredentials = page.locator('.login_password');
   }
 
   async navigate(): Promise<void> {
