@@ -1,14 +1,26 @@
-import { expect, type Page } from '@playwright/test';
+import { expect, type Page, type Locator } from '@playwright/test';
 import { BasePage } from '../pages/BasePage';
-import { LoginFormComponent } from '../components/LoginFormComponent';
 
 export class LoginPage extends BasePage {
   path = '/';
-  readonly form: LoginFormComponent;
+
+  readonly usernameInput: Locator = this.page.locator('#user-name');
+  readonly passwordInput: Locator = this.page.locator('#password');
+  readonly loginBtn: Locator = this.page.locator('#login-button');
+  readonly logo: Locator = this.page.locator('.login_logo');
+  readonly textHeader: Locator = this.page.getByText('Accepted usernames are:');
+  readonly loginCredentials: Locator = this.page.locator('.login_credentials');
+  readonly passwordCredentials: Locator = this.page.locator('.login_password');
+  readonly messageForLockedUser: Locator = this.page.locator('[data-test="error"]');
+  readonly messageInvalidData: Locator = this.page.getByText(
+    'Epic sadface: Username and password do not match any user in this service',
+  );
+  readonly messageForEmptyFields: Locator = this.page.getByText(
+    'Epic sadface: Username is required',
+  );
 
   constructor(page: Page) {
     super(page);
-    this.form = new LoginFormComponent(page);
   }
 
   async assertOnLoginPage(): Promise<void> {
@@ -24,64 +36,74 @@ export class LoginPage extends BasePage {
   }
 
   async login(username: string, password: string): Promise<void> {
-    await this.form.usernameInput.fill(username);
-    await this.form.passwordInput.fill(password);
-    await this.form.loginBtn.click();
+    await this.usernameInput.fill(username);
+    await this.passwordInput.fill(password);
+    await this.loginBtn.click();
   }
 
   async assertUsernameFieldEnable(): Promise<void> {
-    await expect(this.form.usernameInput, 'Field username is visible').toBeEnabled();
+    await expect(this.usernameInput, 'Field username is visible').toBeEnabled();
   }
 
   async assertUserPasswordFieldEnable(): Promise<void> {
-    await expect(this.form.passwordInput, 'Field password is visible').toBeEnabled();
+    await expect(this.passwordInput, 'Field password is visible').toBeEnabled();
   }
 
   async isLoginButtonEnabled(): Promise<void> {
-    await expect(this.form.loginBtn, ' Login button is enable and clickable').toBeEnabled();
+    await expect(this.loginBtn, 'Login button is enabled and clickable').toBeEnabled();
   }
 
   async assertHeaderText(expectedText: string): Promise<void> {
-    await expect(this.form.textHeader, 'User is expected to see text on the page').toHaveText(
+    await expect(this.textHeader, 'User is expected to see text on the page').toHaveText(
       expectedText,
     );
   }
 
   async assertLoginCredentialsVisible(): Promise<void> {
     await expect(
-      this.form.loginCredentials,
+      this.loginCredentials,
       'User is expected to see text about login credentials',
     ).toBeVisible();
   }
 
   async assertPasswordCredentialsVisible(): Promise<void> {
     await expect(
-      this.form.passwordCredentials,
+      this.passwordCredentials,
       'User is expected to see text about password credentials',
     ).toBeVisible();
   }
 
   async assertAcceptedHeaderIsNot(wrongText: string): Promise<void> {
-    await expect(
-      this.form.textHeader,
-      `Header should NOT contain text: "${wrongText}"`,
-    ).not.toHaveText(wrongText);
+    await expect(this.textHeader, `Header should NOT contain text: "${wrongText}"`).not.toHaveText(
+      wrongText,
+    );
   }
 
   async assertVerifyLockedUser(): Promise<void> {
     await expect(
-      this.form.messageForLockedUser,
+      this.messageForLockedUser,
       'User is expected to stay on the same page and see text about locked User',
     ).toBeVisible();
   }
 
   async assertInvalidLoginText(): Promise<void> {
     await expect(
-      this.form.messageInvalidData,
+      this.messageInvalidData,
       'User is expected to stay on the same page and see text',
     ).toBeVisible();
   }
   async verifyLogoLoginPage(): Promise<void> {
-    expect(this.form.logo, 'Logo should be visible').toBeVisible();
+    expect(this.logo, 'Logo should be visible').toBeVisible();
+  }
+  async assertVerifyEmptyField(): Promise<void> {
+    await expect(
+      this.messageForEmptyFields,
+      'User is expected to stay on the same page and see text "Epic sadface: Username is required"',
+    ).toBeVisible();
+  }
+
+  async assertVerifyMaskedPasswordAndHaveValue(): Promise<void> {
+    await expect(this.passwordInput).toHaveAttribute('type', 'password');
+    await expect(this.passwordInput).toHaveValue('secret_sauce');
   }
 }
