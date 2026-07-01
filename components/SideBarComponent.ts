@@ -1,11 +1,11 @@
-import type { Locator, Page } from '@playwright/test';
+import type { Locator } from '@playwright/test';
 import { BaseComponent } from './BaseComponent';
 
 export class SideBarComponent extends BaseComponent {
-  readonly logOutBtn: Locator = this.page.locator('#logout_sidebar_link');
+  readonly logOutBtn: Locator = this.root.locator('#logout_sidebar_link');
 
-  constructor(page: Page) {
-    super(page);
+  constructor(root: Locator) {
+    super(root);
   }
 
   async logOut(): Promise<void> {

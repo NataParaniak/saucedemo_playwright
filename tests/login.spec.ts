@@ -23,27 +23,25 @@ test.describe('Positive scenario', () => {
     await loginPage.assertOnLoginPage();
   });
 
-  test('Check if the user is blocked', async ({ page }) => {
+  test('Login is blocked for locked_out_user', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigate();
     await loginPage.login(credentials.lockedUser.username, credentials.lockedUser.password);
     await loginPage.loginBtn.click();
     await loginPage.assertVerifyLockedUser();
   });
-  test('check if the user has not entered username and password and the fields are empty ', async ({
-    page,
-  }) => {
+  test('Login with empty username and password', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigate();
     await loginPage.loginBtn.click();
-    await loginPage.assertVerifyEmptyField();
+    await loginPage.verifyEmptyField();
   });
 
   test('Password field is masked', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigate();
     await loginPage.login(credentials.lockedUser.username, credentials.lockedUser.password);
-    await loginPage.assertVerifyMaskedPasswordAndHaveValue();
+    await loginPage.verifyMaskedPasswordAndHaveValue();
   });
 });
 

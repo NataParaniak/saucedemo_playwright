@@ -95,15 +95,16 @@ export class LoginPage extends BasePage {
   async verifyLogoLoginPage(): Promise<void> {
     expect(this.logo, 'Logo should be visible').toBeVisible();
   }
-  async assertVerifyEmptyField(): Promise<void> {
+  async verifyEmptyField(): Promise<void> {
     await expect(
       this.messageForEmptyFields,
       'User is expected to stay on the same page and see text "Epic sadface: Username is required"',
     ).toBeVisible();
   }
 
-  async assertVerifyMaskedPasswordAndHaveValue(): Promise<void> {
+  async verifyMaskedPasswordAndHaveValue(): Promise<void> {
     await expect(this.passwordInput).toHaveAttribute('type', 'password');
     await expect(this.passwordInput).toHaveValue('secret_sauce');
+    await expect(this.passwordInput).toHaveScreenshot();
   }
 }

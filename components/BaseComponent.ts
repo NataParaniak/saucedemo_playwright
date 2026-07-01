@@ -1,9 +1,9 @@
-import type { Page } from '@playwright/test';
+import type { Locator } from '@playwright/test';
 
 export abstract class BaseComponent {
-  protected page: Page;
+  protected root: Locator;
 
-  constructor(page: Page) {
-    this.page = page;
+  constructor(root: Locator) {
+    this.root = root;
   }
 }
