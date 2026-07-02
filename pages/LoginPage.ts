@@ -104,6 +104,7 @@ export class LoginPage extends BasePage {
 
   async verifyMaskedPasswordAndHaveValue(): Promise<void> {
     await expect(this.passwordInput).toHaveAttribute('type', 'password');
-    await expect(this.passwordInput).toHaveValue('secret_sauce');
+    const password = await this.passwordInput.inputValue();
+    expect(password).toBe('secret_sauce');
   }
 }
