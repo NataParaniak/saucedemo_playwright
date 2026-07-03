@@ -1,6 +1,5 @@
 import { expect, type Page, type Locator } from '@playwright/test';
 import { BasePage } from '../pages/BasePage';
-import credentials from '../test-data/credentials.json';
 
 export class LoginPage extends BasePage {
   path = '/';
@@ -103,14 +102,12 @@ export class LoginPage extends BasePage {
     ).toBeVisible();
   }
 
-  async verifyMaskedPasswordAndHaveValue(): Promise<void> {
+  async verifyMaskedPasswordAndHaveValue(expectPassword: string): Promise<void> {
     await expect(this.passwordInput, 'Password field should be masked').toHaveAttribute(
       'type',
       'password',
     );
     const password = await this.passwordInput.inputValue();
-    expect(password, 'Password value should match the expected password').toBe(
-      credentials.standardUser.password,
-    );
+    expect(password, 'Password value should match the expected password').toBe(expectPassword);
   }
 }

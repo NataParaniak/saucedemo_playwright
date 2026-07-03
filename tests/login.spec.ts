@@ -41,7 +41,7 @@ test.describe('Positive scenario', () => {
     const loginPage = new LoginPage(page);
     await loginPage.navigate();
     await loginPage.login(credentials.lockedUser.username, credentials.lockedUser.password);
-    await loginPage.verifyMaskedPasswordAndHaveValue();
+    await loginPage.verifyMaskedPasswordAndHaveValue(credentials.standardUser.password);
   });
 });
 
