@@ -1,5 +1,6 @@
 import { expect, type Page, type Locator } from '@playwright/test';
 import { BasePage } from '../pages/BasePage';
+import credentials from '../test-data/credentials.json';
 
 export class LoginPage extends BasePage {
   path = '/';
@@ -79,7 +80,7 @@ export class LoginPage extends BasePage {
     );
   }
 
-  async assertVerifyLockedUser(): Promise<void> {
+  async assertLockedUser(): Promise<void> {
     await expect(
       this.messageForLockedUser,
       'User is expected to stay on the same page and see text about locked User',
@@ -103,8 +104,13 @@ export class LoginPage extends BasePage {
   }
 
   async verifyMaskedPasswordAndHaveValue(): Promise<void> {
-    await expect(this.passwordInput).toHaveAttribute('type', 'password');
+    await expect(this.passwordInput, 'Password field should be masked').toHaveAttribute(
+      'type',
+      'password',
+    );
     const password = await this.passwordInput.inputValue();
-    expect(password).toBe('secret_sauce');
+    expect(password, 'Password value should match the expected password').toBe(
+      credentials.standardUser.password,
+    );
   }
 }

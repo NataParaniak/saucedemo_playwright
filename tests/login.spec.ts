@@ -23,12 +23,12 @@ test.describe('Positive scenario', () => {
     await loginPage.assertOnLoginPage();
   });
 
-  test('Login is blocked for locked_out_user', async ({ page }) => {
+  test('Check if the user is locked', async ({ page }) => {
     const loginPage = new LoginPage(page);
     await loginPage.navigate();
     await loginPage.login(credentials.lockedUser.username, credentials.lockedUser.password);
     await loginPage.loginBtn.click();
-    await loginPage.assertVerifyLockedUser();
+    await loginPage.assertLockedUser();
   });
   test('Login with empty username and password', async ({ page }) => {
     const loginPage = new LoginPage(page);
