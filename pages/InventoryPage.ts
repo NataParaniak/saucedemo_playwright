@@ -9,8 +9,8 @@ export class InventoryPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-    this.header = new HeaderComponent(this.page.locator('#header_container'));
-    this.sideBar = new SideBarComponent(this.page.locator('.bm-menu-wrap'));
+    this.header = new HeaderComponent(page);
+    this.sideBar = new SideBarComponent(page);
   }
   async assertOnInventoryPage(): Promise<void> {
     await expect(this.page, 'User is expected to be on the inventory page').toHaveURL(

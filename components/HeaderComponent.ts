@@ -1,4 +1,4 @@
-import type { Locator } from '@playwright/test';
+import type { Locator, Page } from '@playwright/test';
 import { BaseComponent } from './BaseComponent';
 
 export class HeaderComponent extends BaseComponent {
@@ -6,8 +6,8 @@ export class HeaderComponent extends BaseComponent {
   readonly title: Locator = this.root.locator('.app_logo');
   readonly cartButton: Locator = this.root.locator('.shopping_cart_link');
 
-  constructor(root: Locator) {
-    super(root);
+  constructor(page: Page) {
+    super(page);
   }
 
   async openMenu(): Promise<void> {
